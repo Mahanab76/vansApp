@@ -11,7 +11,9 @@ import Income from "./pages/host/Income";
 import Reviews from "./pages/host/Reviews";
 
 import "./server";
-import HostLayout from "./pages/host/HostLayout";
+import HostLayout from "./components/HostLayout";
+import HostVans from "./pages/host/HostVans";
+import HostVansDetails from "./pages/host/HostVansDetails";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/about" element={<About />} />
           {/* <Route path="/vans" element={<Vans />} />
           <Route path="/vans/:id" element={<VanDetail />} /> same as below but because we dont need to build a another layout component to be a parent so we only use vans path to simply have index of <Vans/> component to show in vans path and just because <Vandetails/> is child of vans path so we dont need /vans/:id because its relative to vans we just do ":id" and react router knows they are siblings*/}
+
           <Route path="vans">
             <Route index element={<Vans />} />
             <Route path=":id" element={<VanDetail />} />
@@ -34,6 +37,8 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="income" element={<Income />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="vans" element={<HostVans />} />
+            <Route path="vans/:id" element={<HostVansDetails />} />
           </Route>
         </Route>
       </Routes>
