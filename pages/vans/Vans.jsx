@@ -17,7 +17,10 @@ export default function Vans() {
     : vans;
   const vanElements = filterMethod.map((van) => (
     <div key={van.id} className="van-tile">
-      <Link to={`/vans/${van.id}`}>
+      <Link
+        to={`${van.id}`}
+        state={{ search: `?${searchParams.toString()}`, type: typeFilter }}
+      >
         <img src={van.imageUrl} />
         <div className="van-info">
           <h3>{van.name}</h3>
@@ -57,28 +60,42 @@ export default function Vans() {
       <div className="van-list-filter-buttons">
         <button
           onClick={() => setSearchParams({ type: "simple" })}
-          className="van-type simple"
+          className={
+            typeFilter === "simple"
+              ? " van-type simple selected"
+              : "van-type simple"
+          }
         >
           Simple
         </button>
         <button
           onClick={() => setSearchParams({ type: "luxury" })}
-          className="van-type luxury"
+          className={
+            typeFilter === "luxury"
+              ? "van-type luxury selected"
+              : "van-type luxury"
+          }
         >
           Luxury
         </button>
         <button
           onClick={() => setSearchParams({ type: "rugged" })}
-          className="van-type rugged"
+          className={
+            typeFilter === "rugged"
+              ? "van-type rugged selected"
+              : "van-type rugged"
+          }
         >
           Rugged
         </button>
-        <button
-          onClick={() => setSearchParams({})}
-          className="van-type clear-filters"
-        >
-          Clear filter
-        </button>
+        {typeFilter ? (
+          <button
+            onClick={() => setSearchParams({})}
+            className="van-type clear-filters"
+          >
+            Clear filter
+          </button>
+        ) : null}
       </div>
       <div className="van-list">{vanElements}</div>
     </div>
