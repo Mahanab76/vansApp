@@ -17,6 +17,7 @@ import HostVansDetails from "./pages/host/HostVansDetails";
 import HostVanPhotos from "./pages/host/HostVanPhotos";
 import HostVanInfo from "./pages/host/HostVanInfo";
 import HostVanPricing from "./pages/host/HostVanPricing";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
               <Route path="vansimage" element={<HostVanPhotos />} />
             </Route>
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

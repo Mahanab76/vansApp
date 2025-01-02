@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useSearchParams } from "react-router";
-
+import { getVans } from "../../api";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import video1 from "../../assets/Animation.gif";
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilter = searchParams.get("type");
-  console.log(typeFilter);
 
   const [vans, setVans] = React.useState([]);
+  const [loading, setLoading] = useState(false);
+
   React.useEffect(() => {
-    fetch("/api/vans")
-      .then((res) => res.json())
-      .then((data) => setVans(data.vans));
+    async function loadVans() {
+      setLoading(true);
+      const data = await getVans();
+      setVans(data);
+      setLoading(false);
+    }
+
+    loadVans();
   }, []);
   const filterMethod = typeFilter
     ? vans.filter((van) => van.type === typeFilter)
@@ -33,6 +41,9 @@ export default function Vans() {
       </Link>
     </div>
   ));
+  if (loading) {
+    return <img className="gif" src={video1} />;
+  }
 
   return (
     <div className="van-list-container">
