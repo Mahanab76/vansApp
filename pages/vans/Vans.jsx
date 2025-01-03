@@ -1,25 +1,32 @@
 import React, { useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import { getVans } from "../../api";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import video1 from "../../assets/Animation.gif";
+import video1 from "../../assets/van.gif";
+
+export function loader() {
+  return getVans();
+}
+
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilter = searchParams.get("type");
+  const [error, setError] = React.useState(null);
+  //useEffect worked after the componenet fully loaded as we know(took about 1 or 2 sec) but now with loader we dont need vans state and loading cause data came right after clicking van page(Faster) this more syncronous behavior
+  // const [loading, setLoading] = useState(false);
+  // const [vans, setVans] = React.useState([]);
 
-  const [vans, setVans] = React.useState([]);
-  const [loading, setLoading] = useState(false);
+  const vans = useLoaderData();
+  // React.useEffect(() => {
+  //   async function loadVans() {
+  //     setLoading(true);
+  //     const data = await getVans();
+  //     setVans(data);
+  //     setLoading(false);
+  //   }
 
-  React.useEffect(() => {
-    async function loadVans() {
-      setLoading(true);
-      const data = await getVans();
-      setVans(data);
-      setLoading(false);
-    }
-
-    loadVans();
-  }, []);
+  //   loadVans();
+  // }, []);
   const filterMethod = typeFilter
     ? vans.filter((van) => van.type === typeFilter)
     : vans;
@@ -41,9 +48,9 @@ export default function Vans() {
       </Link>
     </div>
   ));
-  if (loading) {
-    return <img className="gif" src={video1} />;
-  }
+  // if (loading) {
+  //   return <img className="gif" src={video1} />;
+  // }
 
   return (
     <div className="van-list-container">

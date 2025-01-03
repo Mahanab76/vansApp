@@ -1,12 +1,15 @@
-import { Link } from "react-router";
+import React from "react";
+import { useRouteError } from "react-router";
 
 export default function ErrorPage() {
+  const error = useRouteError();
+  console.log(error);
   return (
-    <div className="not-found-container">
-      <h1>Sorry, the page you were looking for was not found.</h1>
-      <Link to="/" className="link-button">
-        Return to Home
-      </Link>
-    </div>
+    <>
+      <h1>Error: {error.message}</h1>
+      <pre>
+        {error.status} - {error.statusText}
+      </pre>
+    </>
   );
 }
