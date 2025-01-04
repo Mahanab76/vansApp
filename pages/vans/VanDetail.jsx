@@ -1,9 +1,11 @@
 import React from "react";
 import { useParams, Link, useLocation, useLoaderData } from "react-router";
 import { getVans } from "../../api";
-export function loader({ params }) {
+
+export async function loader({ params }) {
   return getVans(params.id);
 }
+
 export default function VanDetail() {
   const van = useLoaderData();
   const location = useLocation();

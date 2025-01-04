@@ -4,7 +4,7 @@ import { getVans } from "../../api";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import video1 from "../../assets/van.gif";
 
-export function loader() {
+export async function loader() {
   return getVans();
 }
 

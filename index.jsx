@@ -30,6 +30,7 @@ import HostVanPricing from "./pages/host/HostVanPricing";
 import PageNotFound from "./components/PageNotFound";
 import ErrorPage from "./components/ErrorPage";
 import Login from "./pages/Login";
+import { requireAuth } from "./utils";
 
 function App() {
   const Router = createBrowserRouter(
@@ -54,19 +55,47 @@ function App() {
           <Route path=":id" element={<VanDetail />} loader={vanDetailLoader} />
           <Route />
         </Route>
-        <Route path="host" element={<HostLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="income" element={<Income />} />
-          <Route path="reviews" element={<Reviews />} />
+        <Route
+          path="host"
+          element={<HostLayout />}
+          loader={async () => await requireAuth()}
+        >
+          <Route
+            index
+            element={<Dashboard />}
+            loader={async () => await requireAuth()}
+          />
+          <Route
+            path="income"
+            element={<Income />}
+            loader={async () => await requireAuth()}
+          />
+          <Route
+            path="reviews"
+            element={<Reviews />}
+            loader={async () => await requireAuth()}
+          />
           <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
           <Route
             path="vans/:id"
             element={<HostVansDetails />}
             loader={hostVansDetailsLoader}
           >
-            <Route index element={<HostVanInfo />} />
-            <Route path="vanspricing" element={<HostVanPricing />} />
-            <Route path="vansimage" element={<HostVanPhotos />} />
+            <Route
+              index
+              element={<HostVanInfo />}
+              loader={async () => await requireAuth()}
+            />
+            <Route
+              path="vanspricing"
+              element={<HostVanPricing />}
+              loader={async () => await requireAuth()}
+            />
+            <Route
+              path="vansimage"
+              element={<HostVanPhotos />}
+              loader={async () => await requireAuth()}
+            />
           </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />
