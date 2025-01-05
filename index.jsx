@@ -29,8 +29,12 @@ import HostVanInfo from "./pages/host/HostVanInfo";
 import HostVanPricing from "./pages/host/HostVanPricing";
 import PageNotFound from "./components/PageNotFound";
 import ErrorPage from "./components/ErrorPage";
-import Login from "./pages/Login";
+import Login, {
+  action as loginAction,
+  loader as loginLoader,
+} from "./pages/Login";
 import { requireAuth } from "./utils";
+localStorage.removeItem("loggedin");
 
 function App() {
   const Router = createBrowserRouter(
@@ -44,7 +48,12 @@ function App() {
         {/* <Route path="/vans" element={<Vans />} />
           <Route path="/vans/:id" element={<VanDetail />} /> same as below but because we dont need to build a another layout component to be a parent so we only use vans path to simply have index of <Vans/> component to show in vans path and just because <Vandetails/> is child of vans path so we dont need /vans/:id because its relative to vans we just do ":id" and react router knows they are siblings*/}
 
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={<Login />}
+          action={loginAction}
+          loader={loginLoader}
+        />
         <Route path="vans">
           <Route
             index
@@ -58,22 +67,22 @@ function App() {
         <Route
           path="host"
           element={<HostLayout />}
-          loader={async () => await requireAuth()}
+          loader={async ({ request }) => await requireAuth(request)}
         >
           <Route
             index
             element={<Dashboard />}
-            loader={async () => await requireAuth()}
+            loader={async ({ request }) => await requireAuth(request)}
           />
           <Route
             path="income"
             element={<Income />}
-            loader={async () => await requireAuth()}
+            loader={async ({ request }) => await requireAuth(request)}
           />
           <Route
             path="reviews"
             element={<Reviews />}
-            loader={async () => await requireAuth()}
+            loader={async ({ request }) => await requireAuth(request)}
           />
           <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
           <Route
@@ -84,17 +93,17 @@ function App() {
             <Route
               index
               element={<HostVanInfo />}
-              loader={async () => await requireAuth()}
+              loader={async ({ request }) => await requireAuth(request)}
             />
             <Route
               path="vanspricing"
               element={<HostVanPricing />}
-              loader={async () => await requireAuth()}
+              loader={async ({ request }) => await requireAuth(request)}
             />
             <Route
               path="vansimage"
               element={<HostVanPhotos />}
-              loader={async () => await requireAuth()}
+              loader={async ({ request }) => await requireAuth(request)}
             />
           </Route>
         </Route>

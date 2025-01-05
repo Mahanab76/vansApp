@@ -7,10 +7,13 @@ import { redirect } from "react-router";
 //     throw redirect("/login");
 //   }
 // }
-export async function requireAuth() {
-  const isLoggedIn = false;
+export async function requireAuth(request) {
+  const pathname = new URL(request.url).pathname;
+  const isLoggedIn = localStorage.getItem("loggedin");
   if (!isLoggedIn) {
-    const response = redirect("/login");
+    const response = redirect(
+      `/login?message=You must log in first.&redirectTo=${pathname}`
+    );
     response.body = true;
     throw response;
   }
