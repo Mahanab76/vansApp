@@ -1,13 +1,20 @@
 import React from "react";
-import { useParams, Link, useLocation, useLoaderData } from "react-router";
-import { getVans } from "../../api";
+import {
+  useParams,
+  Link,
+  useLocation,
+  useLoaderData,
+  Await,
+} from "react-router";
+import { getVan } from "../../api";
+import video1 from "../../assets/van.gif";
 
 export async function loader({ params }) {
-  return getVans(params.id);
+  return { van: getVan(params.id) };
 }
 
 export default function VanDetail() {
-  const van = useLoaderData();
+  const vanPromise = useLoaderData();
   const location = useLocation();
 
   // const params = useParams();
@@ -18,25 +25,32 @@ export default function VanDetail() {
   //     .then((res) => res.json())
   //     .then((data) => setVan(data.vans));
   // }, [params.id]);
+  function handleVanDetails(van) {
+    const history = location.state?.search || "";
+    const backTo = location.state?.type || "All";
+    return (
+      <div className="van-detail-container">
+        <Link to={`..${history}`} relative="path" className="back-button">
+          &larr; <span>Back to {backTo} vans</span>
+        </Link>
 
-  const history = location.state?.search || "";
-  const backTo = location.state?.type || "All";
-  return (
-    <div className="van-detail-container">
-      <Link to={`..${history}`} relative="path" className="back-button">
-        &larr; <span>Back to {backTo} vans</span>
-      </Link>
-
-      <div className="van-detail">
-        <img src={van.imageUrl} />
-        <i className={`van-type ${van.type} selected`}>{van.type}</i>
-        <h2>{van.name}</h2>
-        <p className="van-price">
-          <span>${van.price}</span>/day
-        </p>
-        <p>{van.description}</p>
-        <button className="link-button">Rent this van</button>
+        <div className="van-detail">
+          <img src={van.imageUrl} />
+          <i className={`van-type ${van.type} selected`}>{van.type}</i>
+          <h2>{van.name}</h2>
+          <p className="van-price">
+            <span>${van.price}</span>/day
+          </p>
+          <p>{van.description}</p>
+          <button className="link-button">Rent this van</button>
+        </div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <React.Suspense fallback={<img className="gif" src={video1} />}>
+      <Await resolve={vanPromise.van}>{handleVanDetails}</Await>
+    </React.Suspense>
   );
 }

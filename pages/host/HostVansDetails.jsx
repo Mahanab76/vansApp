@@ -1,15 +1,23 @@
-import { useEffect, useState } from "react";
-import { Link, useParams, NavLink, Outlet, useLoaderData } from "react-router";
-import { getHostVans } from "../../api";
+import React, { useEffect, useState } from "react";
+import {
+  Link,
+  useParams,
+  NavLink,
+  Outlet,
+  useLoaderData,
+  Await,
+} from "react-router";
+import { getVan } from "../../api"; //getHostVans for mirage server
 import { requireAuth } from "../../utils";
+import video1 from "../../assets/van.gif";
 
 export async function loader({ params, request }) {
   await requireAuth(request);
-  return getHostVans(params.id);
+  return { van: getVan(params.id) };
 }
 
 export default function HostVansDetails() {
-  const van = useLoaderData();
+  const vanPromise = useLoaderData();
   // const params = useParams();
   // const [van, setVans] = useState();
   // useEffect(() => {
@@ -27,41 +35,53 @@ export default function HostVansDetails() {
 
   return (
     <section>
-      <Link to=".." relative="path" className="back-button">
-        &larr; <span>Back to all vans</span>
-      </Link>
-      <div className="host-van-detail-layout-container">
-        <div className="host-van-detail">
-          <img src={van.imageUrl} />
-          <div className="host-van-detail-info-text">
-            <i className={`van-type van-type-${van.type}`}>{van.type}</i>
-            <h3>{van.name}</h3>
-            <h4>${van.price}/day</h4>
-          </div>
-        </div>
-        <nav className="host-van-detail-nav">
-          <NavLink
-            end
-            to="."
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-          >
-            Detail
-          </NavLink>
-          <NavLink
-            to="vanspricing"
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-          >
-            Pricing
-          </NavLink>
-          <NavLink
-            to="vansimage"
-            style={({ isActive }) => (isActive ? activeStyles : null)}
-          >
-            Photo
-          </NavLink>
-        </nav>
-        <Outlet context={{ van }} />
-      </div>
+      <React.Suspense fallback={<img className="gif" src={video1} />}>
+        <Await resolve={vanPromise.van}>
+          {(van) => {
+            return (
+              <>
+                <Link to=".." relative="path" className="back-button">
+                  &larr; <span>Back to all vans</span>
+                </Link>
+                <div className="host-van-detail-layout-container">
+                  <div className="host-van-detail">
+                    <img src={van.imageUrl} />
+                    <div className="host-van-detail-info-text">
+                      <i className={`van-type ${van.type} selected`}>
+                        {van.type}
+                      </i>
+                      <h3>{van.name}</h3>
+                      <h4>${van.price}/day</h4>
+                    </div>
+                  </div>
+                  <nav className="host-van-detail-nav">
+                    <NavLink
+                      end
+                      to="."
+                      style={({ isActive }) => (isActive ? activeStyles : null)}
+                    >
+                      Detail
+                    </NavLink>
+                    <NavLink
+                      to="vanspricing"
+                      style={({ isActive }) => (isActive ? activeStyles : null)}
+                    >
+                      Pricing
+                    </NavLink>
+                    <NavLink
+                      to="vansimage"
+                      style={({ isActive }) => (isActive ? activeStyles : null)}
+                    >
+                      Photo
+                    </NavLink>
+                  </nav>
+                  <Outlet context={{ van }} />
+                </div>
+              </>
+            );
+          }}
+        </Await>
+      </React.Suspense>
     </section>
   );
 }

@@ -14,7 +14,7 @@ import About from "./pages/About";
 import Vans, { loader as vansLoader } from "./pages/vans/Vans";
 import VanDetail, { loader as vanDetailLoader } from "./pages/vans/VanDetail";
 import Layout from "./components/Layout";
-import Dashboard from "./pages/host/Dashboard";
+import Dashboard, { loader as dashboardLoader } from "./pages/host/Dashboard";
 import Income from "./pages/host/Income";
 import Reviews from "./pages/host/Reviews";
 
@@ -61,7 +61,12 @@ function App() {
             errorElement={<ErrorPage />}
             loader={vansLoader}
           />
-          <Route path=":id" element={<VanDetail />} loader={vanDetailLoader} />
+          <Route
+            path=":id"
+            element={<VanDetail />}
+            loader={vanDetailLoader}
+            errorElement={<ErrorPage />}
+          />
           <Route />
         </Route>
         <Route
@@ -69,11 +74,7 @@ function App() {
           element={<HostLayout />}
           loader={async ({ request }) => await requireAuth(request)}
         >
-          <Route
-            index
-            element={<Dashboard />}
-            loader={async ({ request }) => await requireAuth(request)}
-          />
+          <Route index element={<Dashboard />} loader={dashboardLoader} />
           <Route
             path="income"
             element={<Income />}
@@ -84,11 +85,17 @@ function App() {
             element={<Reviews />}
             loader={async ({ request }) => await requireAuth(request)}
           />
-          <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
+          <Route
+            path="vans"
+            element={<HostVans />}
+            loader={hostVansLoader}
+            errorElement={<ErrorPage />}
+          />
           <Route
             path="vans/:id"
             element={<HostVansDetails />}
             loader={hostVansDetailsLoader}
+            errorElement={<ErrorPage />}
           >
             <Route
               index
