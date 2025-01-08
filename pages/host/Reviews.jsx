@@ -28,7 +28,7 @@ export default function Reviews() {
       </div>
       <img
         className="graph"
-        src="/assets/images/reviews-graph.png"
+        src="https://ocoguozldfoijgxkgmha.supabase.co/storage/v1/object/sign/vansApp/otherImages/reviews-graph.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ2YW5zQXBwL290aGVySW1hZ2VzL3Jldmlld3MtZ3JhcGgucG5nIiwiaWF0IjoxNzM2MzU0Nzk3LCJleHAiOjE3Njc4OTA3OTd9.05hom755pZdvRxfcu8zKI57Q1uGItFpRbC1u2JqqGAk&t=2025-01-08T16%3A46%3A38.104Z.png"
         alt="Review graph"
       />
       <h3>Reviews (2)</h3>

@@ -126,7 +126,8 @@ footer {
 /*** HOME PAGE ***/
 .home-container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.46)),
-    url("./assets/images/home-hero.png") no-repeat center center;
+    url("https://ocoguozldfoijgxkgmha.supabase.co/storage/v1/object/sign/vansApp/otherImages/gettyimages-1278214169.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ2YW5zQXBwL290aGVySW1hZ2VzL2dldHR5aW1hZ2VzLTEyNzgyMTQxNjkuanBnIiwiaWF0IjoxNzM2MzU0MDU3LCJleHAiOjE3Njc4OTAwNTd9._w3LV9m1pQ2tVNbGl_-Krct6kbCSubw06j9DyxLVqeQ&t=2025-01-08T16%3A34%3A18.084Z.jpg?token")
+      no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

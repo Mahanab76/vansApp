@@ -58,6 +58,7 @@ export default function Vans() {
         </Link>
       </div>
     ));
+
     return (
       <>
         <div className="van-list-filter-buttons">

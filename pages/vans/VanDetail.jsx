@@ -15,6 +15,7 @@ export async function loader({ params }) {
 
 export default function VanDetail() {
   const vanPromise = useLoaderData();
+
   const location = useLocation();
 
   // const params = useParams();
@@ -33,17 +34,20 @@ export default function VanDetail() {
         <Link to={`..${history}`} relative="path" className="back-button">
           &larr; <span>Back to {backTo} vans</span>
         </Link>
-
-        <div className="van-detail">
-          <img src={van.imageUrl} />
-          <i className={`van-type ${van.type} selected`}>{van.type}</i>
-          <h2>{van.name}</h2>
-          <p className="van-price">
-            <span>${van.price}</span>/day
-          </p>
-          <p>{van.description}</p>
-          <button className="link-button">Rent this van</button>
-        </div>
+        {van.map((van) => {
+          return (
+            <div className="van-detail" key={van.id}>
+              <img src={van.imageUrl} />
+              <i className={`van-type ${van.type} selected`}>{van.type}</i>
+              <h2>{van.name}</h2>
+              <p className="van-price">
+                <span>${van.price}</span>/day
+              </p>
+              <p>{van.description}</p>
+              <button className="link-button">Rent this van</button>
+            </div>
+          );
+        })}
       </div>
     );
   }
