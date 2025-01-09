@@ -41,18 +41,8 @@ export default function Login() {
       {error && <h3 className="red">{error}</h3>}
 
       <Form method="post" className="login-form" replace>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email address"
-          defaultValue={"b@b.com"}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          defaultValue={"p123"}
-        />
+        <input name="email" type="email" placeholder="Email address" />
+        <input name="password" type="password" placeholder="Password" />
         <button disabled={navigate.state === "submitting"}>
           {navigate.state === "submitting" ? "Logging in..." : "Log in"}
         </button>
