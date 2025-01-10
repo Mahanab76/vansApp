@@ -29,6 +29,7 @@ const supabase = createClient(
   "https://ocoguozldfoijgxkgmha.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jb2d1b3psZGZvaWpneGtnbWhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzgxNjUsImV4cCI6MjA1MTkxNDE2NX0.-e-Rmvlb3XGnfnX6GYoEaYsXBG_Z0IHlZLwLZs09mf8"
 );
+export default supabase;
 // // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 // const db = getFirestore(app);
@@ -106,23 +107,23 @@ export async function getHostVans() {
 //   return dataArr;
 // }
 
-export async function loginUser(creds) {
-  const res = await fetch("/api/login", {
-    method: "post",
-    body: JSON.stringify(creds),
-  });
-  const data = await res.json();
+// export async function loginUser(creds) {
+//   const res = await fetch("/api/login", {
+//     method: "post",
+//     body: JSON.stringify(creds),
+//   });
+//   const data = await res.json();
 
-  if (!res.ok) {
-    throw {
-      message: data.message,
-      statusText: res.statusText,
-      status: res.status,
-    };
-  }
+//   if (!res.ok) {
+//     throw {
+//       message: data.message,
+//       statusText: res.statusText,
+//       status: res.status,
+//     };
+//   }
 
-  return data;
-}
+//   return data;
+// }
 //for using mirage server
 // export async function getVans(id) {
 //   const url = id ? `/api/vans/${id}` : "/api/vans";

@@ -14,7 +14,7 @@ export async function requireAuth(request) {
     const response = redirect(
       `/login?message=You must log in first.&redirectTo=${pathname}`
     );
-    response.body = true;
+
     throw response;
   }
   return null;

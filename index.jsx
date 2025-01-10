@@ -18,7 +18,6 @@ import Dashboard, { loader as dashboardLoader } from "./pages/host/Dashboard";
 import Income from "./pages/host/Income";
 import Reviews from "./pages/host/Reviews";
 
-import "./server";
 import HostLayout from "./components/HostLayout";
 import HostVans, { loader as hostVansLoader } from "./pages/host/HostVans";
 import HostVansDetails, {
@@ -34,91 +33,99 @@ import Login, {
   loader as loginLoader,
 } from "./pages/Login";
 import { requireAuth } from "./utils";
+import SignIn from "./pages/SignIn";
+
 localStorage.removeItem("loggedin");
 
-function App() {
-  const Router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={<Layout />}>
-        {/* <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-       work the same as below --meaning at <Layout/> index will show <Home/> as child when route match "/" */}
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        {/* <Route path="/vans" element={<Vans />} />
-          <Route path="/vans/:id" element={<VanDetail />} /> same as below but because we dont need to build a another layout component to be a parent so we only use vans path to simply have index of <Vans/> component to show in vans path and just because <Vandetails/> is child of vans path so we dont need /vans/:id because its relative to vans we just do ":id" and react router knows they are siblings*/}
+const Router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      {/* <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+     work the same as below --meaning at <Layout/> index will show <Home/> as child when route match "/" */}
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      {/* <Route path="/vans" element={<Vans />} />
+        <Route path="/vans/:id" element={<VanDetail />} /> same as below but because we dont need to build a another layout component to be a parent so we only use vans path to simply have index of <Vans/> component to show in vans path and just because <Vandetails/> is child of vans path so we dont need /vans/:id because its relative to vans we just do ":id" and react router knows they are siblings*/}
 
+      <Route
+        path="/login"
+        element={<Login />}
+        action={loginAction}
+        loader={loginLoader}
+      />
+      <Route
+        path="/signin"
+        element={<SignIn />}
+        // action={loginAction}
+        // loader={loginLoader}
+      />
+      <Route path="vans">
         <Route
-          path="login"
-          element={<Login />}
-          action={loginAction}
-          loader={loginLoader}
+          index
+          element={<Vans />}
+          errorElement={<ErrorPage />}
+          loader={vansLoader}
         />
-        <Route path="vans">
+        <Route
+          path=":id"
+          element={<VanDetail />}
+          loader={vanDetailLoader}
+          errorElement={<ErrorPage />}
+        />
+        <Route />
+      </Route>
+      <Route
+        path="host"
+        element={<HostLayout />}
+        loader={async ({ request }) => await requireAuth(request)}
+      >
+        <Route index element={<Dashboard />} loader={dashboardLoader} />
+        <Route
+          path="income"
+          element={<Income />}
+          loader={async ({ request }) => await requireAuth(request)}
+        />
+        <Route
+          path="reviews"
+          element={<Reviews />}
+          loader={async ({ request }) => await requireAuth(request)}
+        />
+        <Route
+          path="vans"
+          element={<HostVans />}
+          loader={hostVansLoader}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="vans/:id"
+          element={<HostVansDetails />}
+          loader={hostVansDetailsLoader}
+          errorElement={<ErrorPage />}
+        >
           <Route
             index
-            element={<Vans />}
-            errorElement={<ErrorPage />}
-            loader={vansLoader}
-          />
-          <Route
-            path=":id"
-            element={<VanDetail />}
-            loader={vanDetailLoader}
-            errorElement={<ErrorPage />}
-          />
-          <Route />
-        </Route>
-        <Route
-          path="host"
-          element={<HostLayout />}
-          loader={async ({ request }) => await requireAuth(request)}
-        >
-          <Route index element={<Dashboard />} loader={dashboardLoader} />
-          <Route
-            path="income"
-            element={<Income />}
+            element={<HostVanInfo />}
             loader={async ({ request }) => await requireAuth(request)}
           />
           <Route
-            path="reviews"
-            element={<Reviews />}
+            path="vanspricing"
+            element={<HostVanPricing />}
             loader={async ({ request }) => await requireAuth(request)}
           />
           <Route
-            path="vans"
-            element={<HostVans />}
-            loader={hostVansLoader}
-            errorElement={<ErrorPage />}
+            path="vansimage"
+            element={<HostVanPhotos />}
+            loader={async ({ request }) => await requireAuth(request)}
           />
-          <Route
-            path="vans/:id"
-            element={<HostVansDetails />}
-            loader={hostVansDetailsLoader}
-            errorElement={<ErrorPage />}
-          >
-            <Route
-              index
-              element={<HostVanInfo />}
-              loader={async ({ request }) => await requireAuth(request)}
-            />
-            <Route
-              path="vanspricing"
-              element={<HostVanPricing />}
-              loader={async ({ request }) => await requireAuth(request)}
-            />
-            <Route
-              path="vansimage"
-              element={<HostVanPhotos />}
-              loader={async ({ request }) => await requireAuth(request)}
-            />
-          </Route>
         </Route>
-        <Route path="*" element={<PageNotFound />} />
       </Route>
-    )
-  );
+      <Route path="*" element={<PageNotFound />} />
+    </Route>
+  )
+);
 
+function App() {
   return <RouterProvider router={Router} />;
 }
 

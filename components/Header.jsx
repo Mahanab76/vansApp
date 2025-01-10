@@ -16,7 +16,6 @@ export default function Header() {
         <NavLink
           className={({ isActive }) => (isActive ? activeStyles : null)}
           to="host"
-          exact
         >
           Host
         </NavLink>
@@ -24,14 +23,12 @@ export default function Header() {
         <NavLink
           className={({ isActive }) => (isActive ? activeStyles : null)}
           to="about"
-          exact
         >
           About
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? activeStyles : null)}
           to="vans"
-          exact
         >
           Vans
         </NavLink>

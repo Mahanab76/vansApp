@@ -506,6 +506,16 @@ i[class*="van-type-"] {
   background-color: #161616;
   color: white;
 }
+.logoutbtn {
+  background-color: #ff8c38;
+  border: none;
+  border-radius: 6px;
+  height: 55px;
+  margin-top: 22px;
+  color: white;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
 
 .login-container {
   display: flex;
@@ -551,6 +561,7 @@ i[class*="van-type-"] {
   margin-top: 22px;
   color: white;
   font-family: "Inter", sans-serif;
+  cursor: pointer;
 }
 
 .login-form > button:disabled {

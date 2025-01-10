@@ -36,7 +36,7 @@ export default function Reviews() {
         <div key={review.id}>
           <div className="review">
             {[...Array(review.rating)].map((_, i) => (
-              <img className="review-star" src={star} />
+              <img className="review-star" key={i} src={star} />
             ))}
             <div className="info">
               <p className="name">{review.name}</p>

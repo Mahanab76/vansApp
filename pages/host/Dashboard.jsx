@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   function renderVanElements(vans) {
     const hostVansEls = vans.map((van) => (
-      <NavLink to={`vans/${van.id}`}>
+      <NavLink to={`vans/${van.id}`} key={van.id}>
         <div className="host-van-single" key={van.id}>
           <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
           <div className="host-van-info">
